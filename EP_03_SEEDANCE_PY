@@ -31,21 +31,21 @@ ASSETS = {
     "CHAR_A":    "https://i.ibb.co/DgkhttpS/hf-20260605-081800-d5e74e70-cc62-4b6d-b984-3897dec6e320.png",   # 太空人 SC 01 15 17 主角
     "CHAR_B":    "https://i.ibb.co/4ZR2q8sC/hf-20260605-082550-b1148408-f724-4edb-b7ca-cd3a7e748d8c.png",  # 新聞主播
     "CHAR_C":    "https://i.ibb.co/cSDtbfgV/hf-20260605-071912-8dd14bf5-2692-47e5-80c6-0e33dfd7e18e.png",  # 趕𨋢男
-    "CHAR_D":    "https://i.ibb.co/pBGDcJKw/hf-20260605-072135-ce1b21ee-7b55-44f2-ad35-5d693d6165dc.png",  # 司機主角
+    "CHAR_D":    "https://i.ibb.co/210QGJRJ/hf-20260606-194837-8679efaf-62aa-4193-be90-b40c10e65a94.png",  # 司機主角
     "CHAR_E":    "https://i.ibb.co/0yxVkVx3/hf-20260604-221548-391cc301-b9fe-4b94-bc0c-a0f24600f8e4.png",  # 司機群眾
-    "CHAR_F":    "https://i.ibb.co/bjx9KJG6/hf-20260605-072224-dcd01f9e-b031-42ba-8e5c-6acdb5fd0716.png",  # 主人
+    "CHAR_F":    "https://i.ibb.co/3Y03689Q/hf-20260606-195929-edd18bd7-db69-484a-b207-500a03c2cf50.png",  # 主人
     "CHAR_G":    "https://i.ibb.co/5gwFJwjP/hf-20260604-221923-6506ceb1-2744-46fc-a62e-dc204b2a926c.png",  # 家貓
-    "CHAR_H":    "https://i.ibb.co/0ypWRLBZ/hf-20260605-072408-628ad34c-a658-43d3-85f0-b8c821738c17.png",  # 路人主角
+    "CHAR_H":    "https://i.ibb.co/yFkhgf0z/hf-20260606-200424-ac6bc0b1-7737-4651-88e8-681f79f37dd3.png",  # 路人主角
     "CHAR_I":    "https://i.ibb.co/0V2X1D6c/hf-20260604-222131-a29bd963-0c04-49e2-bc54-846a328ad891.png",  # 眾路人
     "CHAR_J":    "https://i.ibb.co/DgkrBfvW/hf-20260605-072523-9d715416-f126-4614-9178-487ca1b3b56b.png",  # 入閘主角
     "CHAR_K":    "https://i.ibb.co/SXRgRDTN/hf-20260604-222200-836a9f5e-a1e2-4143-a95e-25fb8f8c8dca.png",   #  入閘乘客
-    "CHAR_L":    "https://i.ibb.co/8g30Kmdp/hf-20260605-072816-b4f41e86-0b49-4907-9447-9fca4c904c0f.png",  # 辦公室主角
+    "CHAR_L":    "https://i.ibb.co/HD3bkvct/hf-20260606-200724-b103b726-9fce-4569-bbac-150c6e68f57e.png",  # 辦公室主角
     "CHAR_M":    "https://i.ibb.co/YFDNKjBJ/hf-20260604-224820-4bbbd152-fe39-47a7-acf0-582ddb5edcc8.png",  # 開會同事組別A
     "CHAR_M2":   "https://i.ibb.co/1GgP5PdJ/hf-20260604-222555-daf148ef-5c4b-4c58-bd9a-0f907b14289c.png",  # 開會同事組別B
     "CHAR_N":    "https://i.ibb.co/GvDW2bmx/hf-20260605-073502-fc576d59-a685-4145-ad96-ba0ec33ead33.png",  # 發狂主角
     "CHAR_O":    "https://i.ibb.co/bjmkPz2C/hf-20260604-225748-602c2bc0-ad93-490c-874d-c0f87f4d5ad0.png",  # 發狂市民群眾
     "CHAR_P":    "https://i.ibb.co/LzBVsph6/hf-20260604-225906-59cf9368-67bd-4267-a923-0f81d124fcc8.png",  # 一排人形石像
-    "CHAR_Q":    "https://i.ibb.co/prwWgJVM/hf-20260605-074834-37ebe67e-05e4-469d-9ef8-7057cb32a038.png",   #  遊客主角
+    "CHAR_Q":    "https://i.ibb.co/jkx7b7Rb/hf-20260606-201814-afe0c96f-19c0-4cea-8804-ad464b67d668.png",   #  遊客主角
     "CHAR_R":    "https://i.ibb.co/s99jqzxR/hf-20260604-230041-9f33b36a-3079-445a-8431-23d57d7255ce.png",   # 參觀遊客（數名）
     "CHAR_S":    "https://i.ibb.co/rKZBgSYN/hf-20260604-230234-263332c6-5f6b-43ff-986d-8cfb7ca0f927.png",  # 蜘蛛
     "CHAR_T":    "https://i.ibb.co/5z1THVm/hf-20260604-230335-54ecab5c-074e-45d9-92d1-0a83612111b5.png",  # 候鳥
@@ -62,7 +62,7 @@ ASSETS = {
     "SCENE_2":   "https://i.ibb.co/bgRv5p3D/hf-20260604-214125-81d0748b-9bab-4507-9913-8d8516a1db28.png",  # 電視新聞直播室
     "SCENE_3":   "https://i.ibb.co/nNvZ7bcH/hf-20260604-221701-0d506e4e-8de5-46eb-a335-3c047118d4f0.png",  # 辦公室 — 升降機大堂
     "SCENE_4":   "https://i.ibb.co/23W1sr8h/hf-20260604-224302-cd6500e5-ed7c-4cf9-a740-82e8d51a1fd2-1.png",  # 十字路口
-    "SCENE_5":   "https://i.ibb.co/XffY1PHL/hf-20260604-221941-2525faba-cfcf-46bd-b001-08593e5ce9cb.png",  # 民居 — 客廳
+    "SCENE_5":   "https://i.ibb.co/RTfCjvGt/hf-20260606-210350-01690faf-ba27-464c-9c86-dd0e6ebe37d4.png",  # 民居 — 客廳
     "SCENE_6":   "https://i.ibb.co/QFRM36rQ/hf-20260604-224210-93c7d7d7-6224-4321-9cca-71caa453f258.png",  # 滿地狗屎行人路
     "SCENE_7":   "https://i.ibb.co/35GNFWqd/hf-20260604-222402-52568a22-de75-4e2d-b9ad-634eb3cb094a.png",  # 地鐵站 — 入閘口
     "SCENE_8":   "https://i.ibb.co/s974czfm/hf-20260604-222535-f0e18554-258e-436b-9804-4d47fee2e23c.png",  # 會議室
@@ -81,6 +81,7 @@ ASSETS = {
     "PROP_3":    "https://i.ibb.co/pjnMtrXS/hf-20260604-232845-a5435c36-2c6e-4470-b7db-a9a837dbf131.png",  # 場16專用足球
     "PROP_4":    "https://i.ibb.co/cKGTpBdP/hf-20260604-214242-1fcc2276-fdd1-4072-8749-14326439569a.png",  # 場2BREAKING 專用足球
     "PROP_5":    "https://i.ibb.co/d0SYghmP/image.png",  # 場2新聞報道電視畫面
+    "PROP_6":    "https://i.ibb.co/qY1R62wH/hf-20260606-210422-2b9bdab2-7cce-4741-bd3c-7ce7a2ac47e4.png",  # 場5地球儀
 
     # 特殊
     "STAGING":   "https://i.ibb.co/k6r48xvw/Shot-20260511-233454.jpg",                                     # SET.A.LIGHT 站位圖
