@@ -1,0 +1,482 @@
+import requests
+import os
+import json
+import time
+import glob
+from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# ============================================================
+# API KEY —— 唔好分享俾人！
+# ============================================================
+
+API_KEY = "ark-8b3fd270-24b5-4b55-8415-9a67c94c4ea8-029c7"
+
+# ============================================================
+# BytePlus 設定
+# ============================================================
+
+BASE_URL    = "https://ark.ap-southeast.bytepluses.com/api/v3"
+MODEL_ID    = "dreamina-seedance-2-0-260128"
+# MODEL_ID  = "dreamina-seedance-2-0-fast-260128"
+
+MAX_WORKERS = 3
+
+# ============================================================
+# 資產庫 —— 所有角色、場景、道具、特殊圖片
+# ============================================================
+
+ASSETS = {
+    # 角色
+    "CHAR_A":    "https://i.ibb.co/DgkhttpS/hf-20260605-081800-d5e74e70-cc62-4b6d-b984-3897dec6e320.png",   # 太空人 SC 01 15 17 主角
+    "CHAR_B":    "https://i.ibb.co/4ZR2q8sC/hf-20260605-082550-b1148408-f724-4edb-b7ca-cd3a7e748d8c.png",  # 新聞主播
+    "CHAR_C":    "https://i.ibb.co/cSDtbfgV/hf-20260605-071912-8dd14bf5-2692-47e5-80c6-0e33dfd7e18e.png",  # 趕𨋢男
+    "CHAR_D":    "https://i.ibb.co/pBGDcJKw/hf-20260605-072135-ce1b21ee-7b55-44f2-ad35-5d693d6165dc.png",  # 司機主角
+    "CHAR_E":    "https://i.ibb.co/0yxVkVx3/hf-20260604-221548-391cc301-b9fe-4b94-bc0c-a0f24600f8e4.png",  # 司機群眾
+    "CHAR_F":    "https://i.ibb.co/bjx9KJG6/hf-20260605-072224-dcd01f9e-b031-42ba-8e5c-6acdb5fd0716.png",  # 主人
+    "CHAR_G":    "https://i.ibb.co/5gwFJwjP/hf-20260604-221923-6506ceb1-2744-46fc-a62e-dc204b2a926c.png",  # 家貓
+    "CHAR_H":    "https://i.ibb.co/0ypWRLBZ/hf-20260605-072408-628ad34c-a658-43d3-85f0-b8c821738c17.png",  # 路人主角
+    "CHAR_I":    "https://i.ibb.co/0V2X1D6c/hf-20260604-222131-a29bd963-0c04-49e2-bc54-846a328ad891.png",  # 眾路人
+    "CHAR_J":    "https://i.ibb.co/DgkrBfvW/hf-20260605-072523-9d715416-f126-4614-9178-487ca1b3b56b.png",  # 入閘主角
+    "CHAR_K":    "https://i.ibb.co/SXRgRDTN/hf-20260604-222200-836a9f5e-a1e2-4143-a95e-25fb8f8c8dca.png",   #  入閘乘客
+    "CHAR_L":    "https://i.ibb.co/8g30Kmdp/hf-20260605-072816-b4f41e86-0b49-4907-9447-9fca4c904c0f.png",  # 辦公室主角
+    "CHAR_M":    "https://i.ibb.co/YFDNKjBJ/hf-20260604-224820-4bbbd152-fe39-47a7-acf0-582ddb5edcc8.png",  # 開會同事組別A
+    "CHAR_M2":   "https://i.ibb.co/1GgP5PdJ/hf-20260604-222555-daf148ef-5c4b-4c58-bd9a-0f907b14289c.png",  # 開會同事組別B
+    "CHAR_N":    "https://i.ibb.co/GvDW2bmx/hf-20260605-073502-fc576d59-a685-4145-ad96-ba0ec33ead33.png",  # 發狂主角
+    "CHAR_O":    "https://i.ibb.co/bjmkPz2C/hf-20260604-225748-602c2bc0-ad93-490c-874d-c0f87f4d5ad0.png",  # 發狂市民群眾
+    "CHAR_P":    "https://i.ibb.co/LzBVsph6/hf-20260604-225906-59cf9368-67bd-4267-a923-0f81d124fcc8.png",  # 一排人形石像
+    "CHAR_Q":    "https://i.ibb.co/prwWgJVM/hf-20260605-074834-37ebe67e-05e4-469d-9ef8-7057cb32a038.png",   #  遊客主角
+    "CHAR_R":    "https://i.ibb.co/s99jqzxR/hf-20260604-230041-9f33b36a-3079-445a-8431-23d57d7255ce.png",   # 參觀遊客（數名）
+    "CHAR_S":    "https://i.ibb.co/rKZBgSYN/hf-20260604-230234-263332c6-5f6b-43ff-986d-8cfb7ca0f927.png",  # 蜘蛛
+    "CHAR_T":    "https://i.ibb.co/5z1THVm/hf-20260604-230335-54ecab5c-074e-45d9-92d1-0a83612111b5.png",  # 候鳥
+    "CHAR_W":    "https://i.ibb.co/fd1vfjgQ/hf-20260604-230459-8a4fcee8-cd4c-4478-9719-05d334248dc1.png",  # 將領、技術員（數名）
+    "CHAR_V":    "https://i.ibb.co/mCqVY9GM/hf-20260605-081158-37544152-48e4-460d-9149-4273092156e1.png",  # 著魔市民主角
+    "CHAR_X1":    "https://i.ibb.co/6Rpcyjcw/hf-20260604-231108-959461b3-db69-49cb-ae88-7c7348300ece.png",  # 著魔市民群眾A
+    "CHAR_X2":    "https://i.ibb.co/s9LRFxzK/hf-20260604-230908-6b808306-d60b-4d86-9fb4-c5634c5f91f6.png",  # 著魔市民群眾B
+    "CHAR_X3":    "https://i.ibb.co/zhcNvJtX/hf-20260604-230904-de0a5c05-7bf1-4d8a-8b8d-fadae8cfac83.png",  # 著魔市民群眾C
+    "CHAR_Y":    "https://i.ibb.co/Swt2Cc68/hf-20260605-082814-c417c3b0-9431-47b2-b795-00e5712e2f6d.png",  # 足球場主角
+    "CHAR_Z":    "https://i.ibb.co/Swt2Cc68/hf-20260605-082814-c417c3b0-9431-47b2-b795-00e5712e2f6d.png",  # 足球場裁判
+
+    # 場景
+    "SCENE_1":   "https://i.ibb.co/cXT0MNTF/hf-20260605-180504-fb9ace35-8538-4332-9d2b-0e7b2662caaa.png",  # 外太空 — 地球軌道
+    "SCENE_2":   "https://i.ibb.co/bgRv5p3D/hf-20260604-214125-81d0748b-9bab-4507-9913-8d8516a1db28.png",  # 電視新聞直播室
+    "SCENE_3":   "https://i.ibb.co/nNvZ7bcH/hf-20260604-221701-0d506e4e-8de5-46eb-a335-3c047118d4f0.png",  # 辦公室 — 升降機大堂
+    "SCENE_4":   "https://i.ibb.co/23W1sr8h/hf-20260604-224302-cd6500e5-ed7c-4cf9-a740-82e8d51a1fd2-1.png",  # 十字路口
+    "SCENE_5":   "https://i.ibb.co/XffY1PHL/hf-20260604-221941-2525faba-cfcf-46bd-b001-08593e5ce9cb.png",  # 民居 — 客廳
+    "SCENE_6":   "https://i.ibb.co/QFRM36rQ/hf-20260604-224210-93c7d7d7-6224-4321-9cca-71caa453f258.png",  # 滿地狗屎行人路
+    "SCENE_7":   "https://i.ibb.co/35GNFWqd/hf-20260604-222402-52568a22-de75-4e2d-b9ad-634eb3cb094a.png",  # 地鐵站 — 入閘口
+    "SCENE_8":   "https://i.ibb.co/s974czfm/hf-20260604-222535-f0e18554-258e-436b-9804-4d47fee2e23c.png",  # 會議室
+    "SCENE_9":   "https://i.ibb.co/yc3dcmJg/hf-20260604-225758-53b01bc7-4ea8-4dbd-874e-986ea12c2e7f.png",  # 自助洗衣店
+    "SCENE_10":   "https://i.ibb.co/wrKBnjYX/hf-20260604-230050-c90ddde2-1f52-445d-b098-5c295ee8b150.png",  # 博物館 — 展廳 
+    "SCENE_11":   "https://i.ibb.co/dsVStW3k/hf-20260604-230246-b20c57a8-d34f-400c-8439-4735806d4e8f.png",  # 街角 — 兩條燈柱之間
+    "SCENE_12":   "https://i.ibb.co/CpVj3d41/hf-20260604-230602-99a616f6-ba0c-450c-8f39-de243efc010c.png",  # 天空 — 外景
+    "SCENE_13":   "https://i.ibb.co/JwGBBXVH/hf-20260604-230732-55b04630-3262-4f9b-893d-872cfe9bfe59.png",  # 軍方控制室 / 地堡
+    "SCENE_14":   "https://i.ibb.co/bRKDK90F/hf-20260604-231939-9418b8ee-62a0-47fe-b3a2-e531586722ae.png",  # 城市街道 → 球場外圍
+    "SCENE_15":   "https://i.ibb.co/60WzN60X/hf-20260604-235427-ebda354c-37c2-462c-aae7-a0ad93f6e1b5.png",  # 球場 — 內部 (陰暗版)   
+    "SCENE_16":   "https://i.ibb.co/1JfwR05V/hf-20260605-090046-58a56b53-4d36-4dc9-9cb7-e27f4b91ddef.png",  # 球場 — 內部 (狂歡版)  
+
+    # 道具
+    "PROP_1":    "https://i.ibb.co/tp6hNywK/hf-20260604-213746-2b93e125-d547-437a-8bf8-f7e8fd41a94f.png",  # 太空人專用維修工具
+    "PROP_2":    "https://i.ibb.co/dJ5KXQYL/hf-20260604-235034-0572b8a8-9eb9-4b4f-905c-5b3df58db451.png",  # 神秘隕石
+    "PROP_3":    "https://i.ibb.co/pjnMtrXS/hf-20260604-232845-a5435c36-2c6e-4470-b7db-a9a837dbf131.png",  # 場16專用足球
+    "PROP_4":    "https://i.ibb.co/cKGTpBdP/hf-20260604-214242-1fcc2276-fdd1-4072-8749-14326439569a.png",  # 場2BREAKING 專用足球
+    "PROP_5":    "https://i.ibb.co/d0SYghmP/image.png",  # 場2新聞報道電視畫面
+
+    # 特殊
+    "STAGING":   "https://i.ibb.co/k6r48xvw/Shot-20260511-233454.jpg",                                     # SET.A.LIGHT 站位圖
+    "LASTFRAME": "https://github.com/khm265-web/bensik-assets/blob/main/output_20260520_031519.mp4.00_00_09_18.Still001.png?raw=true",           # 上條片 cap 的幀
+    "FIRSTFRAME": "https://github.com/khm265-web/bensik-assets/blob/main/hf_20260519_060127_d9a53b70-cc9a-4c9e-ac14-ecddd2660b90.png?raw=true", # FIRST FRAME MODE專用
+    "REF_FRAME_01": "https://i.ibb.co/ccfF9Gnf/image.png",
+    "REF_FRAME_02": "https://i.ibb.co/kgZMzBHp/hf-20260527-191342-e29e373a-bd3a-4ab0-be4e-b092c2fc2fb9.png"
+}
+
+# ============================================================
+# AUDIO 描述庫
+# ============================================================
+
+AUDIO_DESCS = {
+    # ── 世界盃廣告劇本 場 1–17 ──────────────────────────────
+
+    # 場 1 ── 外太空 / 太空人 EVA / 隕石逼近
+    "SC01_SPACE_EVA":
+        "Deep space near-silence: rhythmic pressure-suit oxygen breathing slow and isolated, "
+        "faint pressure-suit servo micro-click on movement, sub-bass meteor approach tone rising "
+        "imperceptibly from inaudible to physically felt — no atmosphere, no music, no voice. "
+        "Oxygen breath hitches once and holds on final frame.",
+
+    # 場 2 ── 電視新聞直播室 / 全球插播
+    "SC02_NEWS_BREAK":
+        "Urgent broadcast ambient: overlapping audio bleed from multiple TV screens at different "
+        "volumes and languages, repeating red-alert chime under breaking-news sting, rapid "
+        "newsreader V.O. clipping slightly on peaks, world-map data static crackle, faint crowd "
+        "panic murmur bleeding in from exterior — no music bed, no resolution.",
+
+    # 場 3 ── 辦公室升降機大堂 / 頭鎚頂掣
+    "SC03_ELEVATOR":
+        "Office lobby near-silence: distant HVAC hum, elevator mechanism cable whirr, closing "
+        "door motor winding — then a single sharp forehead-impact thwack on plastic button panel, "
+        "button click registering, doors reversing open with a mechanical ding — footsteps enter "
+        "calmly, elevator ambient resumes as if nothing happened.",
+
+    # 場 4 ── 十字路口 / 司機紅黃牌反應
+    "SC04_CROSSROADS":
+        "Urban traffic gridlock ambient: layered car horns overlapping in irregular bursts, "
+        "multiple tyres screeching to hard simultaneous stop, engines idling unevenly, car doors "
+        "swinging open in sequence, driver shouts and protest echoing off building facades — "
+        "no traffic flow, no resolution, horns continue under scene.",
+
+    # 場 5 ── 民居客廳 / 貓射門 + 門將撲救
+    "SC05_LIVING_ROOM":
+        "Quiet domestic interior: faint wall-clock ticking, globe base rattling softly on shelf "
+        "edge as it tips, globe whooshing through air in slow-motion pitch-shift — then full-body "
+        "crash impact on hardwood floor, deep reverberant thud blooming and fading slowly, "
+        "object caught with hollow ceramic knock — dead silence after, cat collar bell tinkles once.",
+
+    # 場 6 ── 行人路滿地狗屎 / Rabona 繞行
+    "SC06_PAVEMENT":
+        "Pedestrian street exterior ambient: unhurried shoe soles on concrete cycling in loose "
+        "rhythm as pedestrians pass, light distant traffic, intermittent wind channelled between "
+        "buildings — sound entirely normal, neutral, mundane; zero comedic underscoring; "
+        "footwork complexity utterly invisible in the audio.",
+
+    # 場 7 ── 地鐵站入閘口 / 後空翻越閘
+    "SC07_MTR_GATE":
+        "Subway station ambient: low train rumble propagating through tunnel structure, crowd "
+        "shuffle and murmur at medium distance, turnstile card beep-click opening gate — "
+        "then each backflip landing: brief airborne silence followed by dual shoe-sole impact "
+        "on polished tile, squeaking slightly — gate beeps again for the next person, rhythm "
+        "continues, tannoy announcement echoing in background.",
+
+    # 場 8 ── 會議室 / 後空翻跌落座位
+    "SC08_MEETING_ROOM":
+        "Meeting room dead-acoustic ambient: ventilation duct low hum, fluorescent ballast "
+        "buzz, distant corridor sounds muffled by acoustic panels — each colleague entry: "
+        "brief running footsteps, airborne silence, heavy body-into-chair thud absorbed by "
+        "room's dead acoustic, immediate laptop lid click and keyboard typing resuming — "
+        "sequence repeats without emphasis, as if entirely routine.",
+
+    # 場 9 ── 自助洗衣店 / 扯開洗衣機揮舞濕衫
+    "SC09_LAUNDROMAT":
+        "Laundromat interior ambient: multiple front-load machines spinning mid-cycle, drum "
+        "rotation and water slosh layered at different phases — then machine door wrenched open "
+        "with metallic resistance clank and seal-break hiss, mid-cycle water surge, soaking "
+        "wet fabric whipping through air with heavy slap, water droplets pelting tile floor "
+        "glass and adjacent machines in irregular splatter — machines continue cycling.",
+
+    # 場 10 ── 博物館展廳 / 石像人牆
+    "SC10_MUSEUM":
+        "Museum gallery near-silence: distant HVAC through high ceiling, soft leather footsteps "
+        "on marble, occasional camera shutter click — then without warning: simultaneous stone-on-"
+        "stone grinding scrape from every statue at once, high-ceiling reverb blooming wide, "
+        "stone settling into position with low resonant thud — one beat silence — visitor "
+        "screams fragmenting into echoes, running footsteps multiplying, camera body shattering "
+        "on marble, gallery doors bursting open — statues: completely silent.",
+
+    # 場 11 ── 街角兩燈柱 / 蜘蛛織龍門蛛網
+    "SC11_SPIDER_WEB":
+        "Dusk street corner exterior ambient: low urban hum receding as golden light fades, "
+        "faint wind channelling between lamp posts in irregular sighs — near-inaudible: dry "
+        "silk thread under tension humming at highest audible frequency, individual filaments "
+        "vibrating as web geometry tightens — web resonates faintly in evening breeze like "
+        "a bowed string harmonic — no insects, no city movement, unsettling stillness.",
+
+    # 場 12 ── 天空 / 候鳥 4-4-2 陣式
+    "SC12_BIRDS_FORMATION":
+        "Open sky exterior ambient: wide-open wind gusting across unobstructed airspace, "
+        "synchronized wing beats building from scattered flutter into locked rhythmic pulse "
+        "as formation tightens — flock air-displacement whoosh sweeping frame, individual "
+        "wing membrane tension audible at close pass — distant city ground noise far below, "
+        "attenuated and small — overhead formation fills the sound field then recedes.",
+
+    # 場 13 ── 軍方控制室 / 飛彈射失
+    "SC13_BUNKER_MISS":
+        "Military command bunker ambient: low generator drone, rack-mount server cooling fans, "
+        "console key click-clatter, countdown voice flat on intercom — missile launch: "
+        "deep concrete-transmitted rumble building then fading — tense held silence — "
+        "then collective human reaction: sharp intake of breath, low groan spreading across "
+        "room, single fist striking console hard, rolling chair knocked backward, one man's "
+        "crushed cap hitting the floor — generator drone continues, indifferent.",
+
+    # 場 14 ── 城市街道到球場外圍 / 著魔人潮湧現
+    "SC14_CROWD_SURGE":
+        "Mass exterior crowd ambient: tens of thousands of footsteps layering into sub-bass "
+        "ground rumble, low collective moan rising beneath crowd noise like a single organism, "
+        "wet knee-slide scraping asphalt in metronomic rhythm cutting through crowd texture — "
+        "meteor atmospheric entry building overhead: infrasonic pressure wave, ionisation "
+        "crackle, re-entry roar growing to fill the entire frequency spectrum — city traffic, "
+        "signage, all urban ambience completely swallowed — only crowd and sky remain.",
+
+    # 場 15 ── 外太空 / 太空人中段錨點（INSERT 半秒）
+    "SC15_SPACE_ANCHOR":
+        "Deep space near-silence: steady oxygen breathing quieter and slower than SC01, "
+        "faint pressure-suit micro-servo on slight turn of helmet — held, unresolved — "
+        "same sonic world as opening, no dramatic shift; presence implied through breath alone.",
+
+    # 場 16A ── 球場內部 / 隕石墜落→全片靜音
+    "SC16_IMPACT_SILENCE":
+        "Stadium interior: 80,000-person collective breath held — near-total silence, "
+        "only distant structural creak — meteor low-frequency concussive impact: single "
+        "deep shockwave thud felt more than heard, stadium structure resonating briefly — "
+        "dust-particle suspension hiss, fine debris settling on turf — then complete "
+        "engineered digital silence; even room tone removed. Hold.",
+
+    # 場 16B ── 哨子劃破→萬人爆發反轉
+    "SC16_WHISTLE_ERUPTION":
+        "Single referee whistle — clean, piercing, isolated in silence, no reverb tail — "
+        "then: stadium detonation, 80,000 voices erupting simultaneously into full-spectrum "
+        "roar, fireworks crack and whistle cascading overhead, tifo fabric unrolling with "
+        "fabric-rush whoosh, confetti cannons popping in sequence, stadium PA system "
+        "surging on — every frequency filled — the entire cold-grey sonic world of the "
+        "preceding 55 seconds snaps to colour and full volume in a single frame.",
+
+    # 場 17 ── 外太空 / 太空人倒掛金鈎 + 片名
+    "SC17_BICYCLE_KICK":
+        "Deep space silence absolute: faint pressure-suit fabric shift on rotation, "
+        "zero-gravity slow tumble with barely audible suit servo winding down — "
+        "one held breath at apex of kick — then: complete silence as foot sweeps "
+        "through forced-perspective frame — silence sustained under title card fade-in; "
+        "no sting, no music, no resolution — the silence IS the punctuation.",
+}
+
+# ============================================================
+# 讀取 jobs/ 資料夾
+# 每個 job = 一個 .json（設定）+ 同名 .txt（prompt）
+# active: true → 執行 / active: false → 跳過
+# ============================================================
+
+def make_jobs():
+    jobs_dir   = os.path.join(os.path.dirname(os.path.abspath(__file__)), "jobs")
+    json_files = sorted(glob.glob(os.path.join(jobs_dir, "*.json")))
+
+    if not json_files:
+        print("❌ 喺 jobs/ 資料夾搵唔到任何 .json 檔案！")
+        return []
+
+    jobs = []
+    for path in json_files:
+        with open(path, "r", encoding="utf-8") as f:
+            job = json.load(f)
+
+        # 跳過 inactive job
+        if not job.get("active", True):
+            print(f"⏭️  跳過（inactive）: {job.get('name', path)}")
+            continue
+
+        # 讀同名 .txt 作為 prompt
+        txt_path = path.replace(".json", ".txt")
+        if os.path.exists(txt_path):
+            with open(txt_path, "r", encoding="utf-8") as ft:
+                prompt = ft.read()
+        else:
+            prompt = job.get("prompt", "")
+
+        # 替換 {KEY} → "Image N" 或 "Video N"
+        selected  = job.get("selected", [])
+        img_count = 0
+        vid_count = 0
+        tag       = {}
+        for key in selected:
+            url = ASSETS.get(key, "")
+            if url.lower().split("?")[0].endswith((".mp4", ".mov", ".webm")):
+                vid_count += 1
+                tag[key] = f"Video {vid_count}"
+            else:
+                img_count += 1
+                tag[key] = f"Image {img_count}"
+        for key, label in tag.items():
+            prompt = prompt.replace(f"{{{key}}}", label)
+
+        # 替換 {AUDIO}
+        audio_key = job.get("audio", "")
+        if audio_key and audio_key in AUDIO_DESCS:
+            prompt = prompt.replace("{AUDIO}", AUDIO_DESCS[audio_key])
+        else:
+            prompt = prompt.replace("{AUDIO}", "")
+
+        job["prompt"] = prompt
+        jobs.append(job)
+        print(f"✅ 載入: {job['name']}  ratio={job.get('ratio','9:16')}  {job.get('duration')}s  {job.get('resolution')}  mode={job.get('mode','REFERENCE')}")
+
+    return jobs
+
+# ============================================================
+# 以下唔需要改
+# ============================================================
+
+def build_content(job):
+    selected = job["selected"]
+    mode     = job["mode"]
+    prompt   = job["prompt"]
+
+    content = [{"type": "text", "text": prompt.strip()}]
+
+    for key in selected:
+        url = ASSETS[key]
+        if url.lower().split("?")[0].endswith((".mp4", ".mov", ".webm")):
+            content.append({
+                "type":      "video_url",
+                "video_url": {"url": url},
+                "role":      "reference_video"
+            })
+        else:
+            content.append({
+                "type":      "image_url",
+                "image_url": {"url": url},
+                "role":      "reference_image"
+            })
+
+    # 額外 ref_videos（獨立 URL，唔係 ASSETS key）
+    for url in job.get("ref_videos", []):
+        content.append({
+            "type":      "video_url",
+            "video_url": {"url": url},
+            "role":      "reference_video"
+        })
+
+    if mode == "FIRSTFRAME":
+        content.append({
+            "type":      "image_url",
+            "image_url": {"url": ASSETS["FIRSTFRAME"]},
+            "role":      "first_frame"
+        })
+    elif mode == "LASTFRAME":
+        content.append({
+            "type":      "image_url",
+            "image_url": {"url": ASSETS["LASTFRAME"]},
+            "role":      "last_frame"
+        })
+    elif mode == "FIRSTLAST":
+        content.append({
+            "type":      "image_url",
+            "image_url": {"url": ASSETS["FIRSTFRAME"]},
+            "role":      "first_frame"
+        })
+        content.append({
+            "type":      "image_url",
+            "image_url": {"url": ASSETS["LASTFRAME"]},
+            "role":      "last_frame"
+        })
+
+    return content
+
+
+def create_task(job, content):
+    payload = {
+        "model":          MODEL_ID,
+        "content":        content,
+        "ratio":          job.get("ratio", "9:16"),
+        "resolution":     job["resolution"],
+        "duration":       job["duration"],
+        "generate_audio": True,
+        **({"seed":            job["seed"]}             if "seed"            in job else {}),
+        **({"negative_prompt": job["negative_prompt"]}  if "negative_prompt" in job else {}),
+    }
+
+    for attempt in range(1, 4):
+        try:
+            response = requests.post(
+                f"{BASE_URL}/contents/generations/tasks",
+                headers={
+                    "Authorization": f"Bearer {API_KEY}",
+                    "Content-Type":  "application/json",
+                },
+                data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                timeout=120
+            )
+
+            if response.status_code != 200:
+                print(f"[{job['name']}] ❌ 提交失敗 {response.status_code}: {response.text}")
+                return None
+
+            result  = response.json()
+            task_id = result.get("id")
+            print(f"[{job['name']}] ✅ 提交成功 Task ID: {task_id}")
+            return task_id
+
+        except requests.exceptions.Timeout:
+            print(f"[{job['name']}] ⏱️ Timeout，重試 {attempt}/3...")
+            time.sleep(10)
+
+    print(f"[{job['name']}] ❌ 重試 3 次後仍然失敗")
+    return None
+
+
+def poll_and_download(job, task_id):
+    name          = job["name"]
+    poll_interval = 15
+
+    while True:
+        time.sleep(poll_interval)
+
+        response = requests.get(
+            f"{BASE_URL}/contents/generations/tasks/{task_id}",
+            headers={"Authorization": f"Bearer {API_KEY}"},
+            timeout=30
+        )
+
+        if response.status_code != 200:
+            print(f"[{name}] ❌ 查詢失敗 {response.status_code}: {response.text}")
+            return
+
+        result = response.json()
+        status = result.get("status")
+        print(f"[{name}] 狀態: {status}")
+
+        if status == "succeeded":
+            video_url = result["content"]["video_url"]
+            break
+        elif status in ("failed", "cancelled"):
+            print(f"[{name}] ❌ 任務失敗: {result}")
+            return
+
+    print(f"[{name}] 📥 下載中...")
+    dl = requests.get(video_url, timeout=300)
+    if dl.status_code != 200:
+        print(f"[{name}] ❌ 下載失敗")
+        return
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename  = f"{name}_{timestamp}.mp4"
+    with open(filename, "wb") as f:
+        f.write(dl.content)
+
+    size_mb = os.path.getsize(filename) / 1024 / 1024
+    print(f"[{name}] ✅ 完成！儲存為：{filename}（{size_mb:.1f} MB）")
+
+
+def run_job(job):
+    content = build_content(job)
+    task_id = create_task(job, content)
+    if not task_id:
+        return
+    poll_and_download(job, task_id)
+
+
+def generate():
+    print("📂 載入 jobs...\n")
+    jobs = make_jobs()
+
+    if not jobs:
+        print("⚠️  沒有 active job，結束。")
+        return
+
+    print(f"\n🚀 共 {len(jobs)} 個 active JOB，最多 {MAX_WORKERS} 個同時進行\n")
+
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        futures = {executor.submit(run_job, job): job["name"] for job in jobs}
+        for future in as_completed(futures):
+            name = futures[future]
+            try:
+                future.result()
+            except Exception as e:
+                print(f"[{name}] ❌ 例外錯誤: {e}")
+
+    print("\n🎬 所有 JOB 完成！")
+
+    import winsound
+    for _ in range(3):
+        winsound.Beep(1000, 500)
+
+
+if __name__ == "__main__":
+    generate()
