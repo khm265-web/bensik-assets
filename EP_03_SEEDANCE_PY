@@ -28,7 +28,7 @@ MAX_WORKERS = 3
 
 ASSETS = {
     # 角色
-    "CHAR_A":    "https://i.ibb.co/DgkhttpS/hf-20260605-081800-d5e74e70-cc62-4b6d-b984-3897dec6e320.png",   # 太空人 SC 01 15 17 主角
+    "CHAR_A":    "https://i.ibb.co/HTPRQS5Q/hf-20260607-140636-7b5862ab-310f-4627-85cc-dd861c680395.png",   # 太空人 SC 01 15 17 主角
     "CHAR_B":    "https://i.ibb.co/4ZR2q8sC/hf-20260605-082550-b1148408-f724-4edb-b7ca-cd3a7e748d8c.png",  # 新聞主播
     "CHAR_C":    "https://i.ibb.co/cSDtbfgV/hf-20260605-071912-8dd14bf5-2692-47e5-80c6-0e33dfd7e18e.png",  # 趕𨋢男
     "CHAR_D":    "https://i.ibb.co/210QGJRJ/hf-20260606-194837-8679efaf-62aa-4193-be90-b40c10e65a94.png",  # 司機主角
@@ -55,7 +55,7 @@ ASSETS = {
     "CHAR_X2":    "https://i.ibb.co/s9LRFxzK/hf-20260604-230908-6b808306-d60b-4d86-9fb4-c5634c5f91f6.png",  # 著魔市民群眾B
     "CHAR_X3":    "https://i.ibb.co/zhcNvJtX/hf-20260604-230904-de0a5c05-7bf1-4d8a-8b8d-fadae8cfac83.png",  # 著魔市民群眾C
     "CHAR_Y":    "https://i.ibb.co/Swt2Cc68/hf-20260605-082814-c417c3b0-9431-47b2-b795-00e5712e2f6d.png",  # 足球場主角
-    "CHAR_Z":    "https://i.ibb.co/Swt2Cc68/hf-20260605-082814-c417c3b0-9431-47b2-b795-00e5712e2f6d.png",  # 足球場裁判
+    "CHAR_Z":    "https://i.ibb.co/1JfwR05V/hf-20260605-090046-58a56b53-4d36-4dc9-9cb7-e27f4b91ddef.png",  # 足球場裁判
 
     # 場景
     "SCENE_1":   "https://i.ibb.co/cXT0MNTF/hf-20260605-180504-fb9ace35-8538-4332-9d2b-0e7b2662caaa.png",  # 外太空 — 地球軌道
@@ -69,7 +69,7 @@ ASSETS = {
     "SCENE_9":   "https://i.ibb.co/yc3dcmJg/hf-20260604-225758-53b01bc7-4ea8-4dbd-874e-986ea12c2e7f.png",  # 自助洗衣店
     "SCENE_10":   "https://i.ibb.co/wrKBnjYX/hf-20260604-230050-c90ddde2-1f52-445d-b098-5c295ee8b150.png",  # 博物館 — 展廳 
     "SCENE_11":   "https://i.ibb.co/dsVStW3k/hf-20260604-230246-b20c57a8-d34f-400c-8439-4735806d4e8f.png",  # 街角 — 兩條燈柱之間
-    "SCENE_12":   "https://i.ibb.co/CpVj3d41/hf-20260604-230602-99a616f6-ba0c-450c-8f39-de243efc010c.png",  # 天空 — 外景
+    "SCENE_12":   "https://i.ibb.co/Sw1zZp2h/hf-20260607-142534-816a8c99-bc3a-48f3-92fb-621cc7559757.png",  # 天空 — 外景
     "SCENE_13":   "https://i.ibb.co/JwGBBXVH/hf-20260604-230732-55b04630-3262-4f9b-893d-872cfe9bfe59.png",  # 軍方控制室 / 地堡
     "SCENE_14":   "https://i.ibb.co/bRKDK90F/hf-20260604-231939-9418b8ee-62a0-47fe-b3a2-e531586722ae.png",  # 城市街道 → 球場外圍
     "SCENE_15":   "https://i.ibb.co/60WzN60X/hf-20260604-235427-ebda354c-37c2-462c-aae7-a0ad93f6e1b5.png",  # 球場 — 內部 (陰暗版)   
@@ -87,7 +87,7 @@ ASSETS = {
     # 特殊
     "STAGING":   "https://i.ibb.co/k6r48xvw/Shot-20260511-233454.jpg",                                     # SET.A.LIGHT 站位圖
     "LASTFRAME": "https://github.com/khm265-web/bensik-assets/blob/main/output_20260520_031519.mp4.00_00_09_18.Still001.png?raw=true",           # 上條片 cap 的幀
-    "FIRSTFRAME": "https://github.com/khm265-web/bensik-assets/blob/main/hf_20260519_060127_d9a53b70-cc9a-4c9e-ac14-ecddd2660b90.png?raw=true", # FIRST FRAME MODE專用
+    "FIRSTFRAME": "https://i.ibb.co/Mq0zLw2/hf-20260607-150113-1cdddb7b-11f3-46c7-ae24-fabc6be7dde2.png", # FIRST FRAME MODE專用
     "REF_FRAME_01": "https://i.ibb.co/ccfF9Gnf/image.png",
     "REF_FRAME_02": "https://i.ibb.co/kgZMzBHp/hf-20260527-191342-e29e373a-bd3a-4ab0-be4e-b092c2fc2fb9.png"
 }
