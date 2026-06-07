@@ -50,12 +50,14 @@ ASSETS = {
     "CHAR_S":    "https://i.ibb.co/rKZBgSYN/hf-20260604-230234-263332c6-5f6b-43ff-986d-8cfb7ca0f927.png",  # 蜘蛛
     "CHAR_T":    "https://i.ibb.co/5z1THVm/hf-20260604-230335-54ecab5c-074e-45d9-92d1-0a83612111b5.png",  # 候鳥
     "CHAR_W":    "https://i.ibb.co/fd1vfjgQ/hf-20260604-230459-8a4fcee8-cd4c-4478-9719-05d334248dc1.png",  # 將領、技術員（數名）
+    "CHAR_W1":    "https://i.ibb.co/hj2p08r/hf-20260607-202347-f63fe227-8e12-4016-9854-147ff4e90bf7.png",  # 高級將領(主角)
     "CHAR_V":    "https://i.ibb.co/mCqVY9GM/hf-20260605-081158-37544152-48e4-460d-9149-4273092156e1.png",  # 著魔市民主角
     "CHAR_X1":    "https://i.ibb.co/6Rpcyjcw/hf-20260604-231108-959461b3-db69-49cb-ae88-7c7348300ece.png",  # 著魔市民群眾A
     "CHAR_X2":    "https://i.ibb.co/s9LRFxzK/hf-20260604-230908-6b808306-d60b-4d86-9fb4-c5634c5f91f6.png",  # 著魔市民群眾B
     "CHAR_X3":    "https://i.ibb.co/zhcNvJtX/hf-20260604-230904-de0a5c05-7bf1-4d8a-8b8d-fadae8cfac83.png",  # 著魔市民群眾C
     "CHAR_Y":    "https://i.ibb.co/Swt2Cc68/hf-20260605-082814-c417c3b0-9431-47b2-b795-00e5712e2f6d.png",  # 足球場主角
     "CHAR_Z":    "https://i.ibb.co/1JfwR05V/hf-20260605-090046-58a56b53-4d36-4dc9-9cb7-e27f4b91ddef.png",  # 足球場裁判
+
 
     # 場景
     "SCENE_1":   "https://i.ibb.co/cXT0MNTF/hf-20260605-180504-fb9ace35-8538-4332-9d2b-0e7b2662caaa.png",  # 外太空 — 地球軌道
