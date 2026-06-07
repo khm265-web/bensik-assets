@@ -57,6 +57,10 @@ ASSETS = {
     "CHAR_X3":    "https://i.ibb.co/zhcNvJtX/hf-20260604-230904-de0a5c05-7bf1-4d8a-8b8d-fadae8cfac83.png",  # 著魔市民群眾C
     "CHAR_Y":    "https://i.ibb.co/Swt2Cc68/hf-20260605-082814-c417c3b0-9431-47b2-b795-00e5712e2f6d.png",  # 足球場主角
     "CHAR_Z":    "https://i.ibb.co/1JfwR05V/hf-20260605-090046-58a56b53-4d36-4dc9-9cb7-e27f4b91ddef.png",  # 足球場裁判
+    "CHAR_Y1":    "https://i.ibb.co/BVn294DK/hf-20260607-204558-f54abf16-68ec-4970-9772-131550e6cc00.png",  # 足球場看台特別角A
+    "CHAR_Y2":    "https://i.ibb.co/fYHqcrcK/hf-20260607-205525-d6812d8f-325c-4e05-99ad-ff2bdad03226.png",  # 足球場看台特別角B
+    "CHAR_Y3":    "https://i.ibb.co/7N0KdDzd/hf-20260607-210335-9ab81245-132b-47dc-bf90-3902e18c92ed.png",  # 足球場看台特別角C  
+
 
 
     # 場景
