@@ -73,7 +73,7 @@ ASSETS = {
     "SCENE_13":   "https://i.ibb.co/JwGBBXVH/hf-20260604-230732-55b04630-3262-4f9b-893d-872cfe9bfe59.png",  # 軍方控制室 / 地堡
     "SCENE_14":   "https://i.ibb.co/bRKDK90F/hf-20260604-231939-9418b8ee-62a0-47fe-b3a2-e531586722ae.png",  # 城市街道 → 球場外圍
     "SCENE_15":   "https://i.ibb.co/60WzN60X/hf-20260604-235427-ebda354c-37c2-462c-aae7-a0ad93f6e1b5.png",  # 球場 — 內部 (陰暗版)   
-    "SCENE_16":   "https://i.ibb.co/1JfwR05V/hf-20260605-090046-58a56b53-4d36-4dc9-9cb7-e27f4b91ddef.png",  # 球場 — 內部 (狂歡版)  
+    "SCENE_16":   "https://i.ibb.co/BHchPXLM/hf-20260604-235442-d9e26616-afb8-416e-9179-83595201e181.png",  # 球場 — 內部 (狂歡版)  
 
     # 道具
     "PROP_1":    "https://i.ibb.co/tp6hNywK/hf-20260604-213746-2b93e125-d547-437a-8bf8-f7e8fd41a94f.png",  # 太空人專用維修工具
@@ -223,14 +223,20 @@ AUDIO_DESCS = {
         "dust-particle suspension hiss, fine debris settling on turf — then complete "
         "engineered digital silence; even room tone removed. Hold.",
 
-    # 場 16B ── 哨子劃破→萬人爆發反轉
-    "SC16_WHISTLE_ERUPTION":
-        "Single referee whistle — clean, piercing, isolated in silence, no reverb tail — "
-        "then: stadium detonation, 80,000 voices erupting simultaneously into full-spectrum "
-        "roar, fireworks crack and whistle cascading overhead, tifo fabric unrolling with "
-        "fabric-rush whoosh, confetti cannons popping in sequence, stadium PA system "
-        "surging on — every frequency filled — the entire cold-grey sonic world of the "
-        "preceding 55 seconds snaps to colour and full volume in a single frame.",
+    # 場 16B ── 哨子劃破
+    "SC16_WHISTLE":
+    "Single referee whistle — clean, sharp, piercing, isolated in total silence, "
+    "no reverb tail, no crowd, no music — lone whistle blast cutting dead-still "
+    "stadium air, then silence resuming.",
+
+    # 場 16B ── 萬人爆發反轉
+    "SC16_ERUPTION":
+    "Stadium detonation: 80,000 voices erupting simultaneously into full-spectrum "
+    "roar, fireworks crack and whistle cascading overhead, tifo fabric unrolling "
+    "with fabric-rush whoosh, confetti cannons popping in sequence, stadium PA "
+    "surging on — every frequency filled at once — the cold sonic world snapping "
+    "to full volume in a single frame.",
+
 
     # 場 17 ── 外太空 / 太空人倒掛金鈎 + 片名
     "SC17_BICYCLE_KICK":
