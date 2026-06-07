@@ -82,6 +82,7 @@ ASSETS = {
     "PROP_4":    "https://i.ibb.co/cKGTpBdP/hf-20260604-214242-1fcc2276-fdd1-4072-8749-14326439569a.png",  # 場2BREAKING 專用足球
     "PROP_5":    "https://i.ibb.co/d0SYghmP/image.png",  # 場2新聞報道電視畫面
     "PROP_6":    "https://i.ibb.co/qY1R62wH/hf-20260606-210422-2b9bdab2-7cce-4741-bd3c-7ce7a2ac47e4.png",  # 場5地球儀
+    "PROP_7":    "https://i.ibb.co/1tkTtX3J/hf-20260607-131637-67092222-6ba8-4390-8045-3463f6f2ce84.png",  # 場11末日報紙
 
     # 特殊
     "STAGING":   "https://i.ibb.co/k6r48xvw/Shot-20260511-233454.jpg",                                     # SET.A.LIGHT 站位圖
