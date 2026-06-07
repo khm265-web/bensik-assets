@@ -95,7 +95,7 @@ ASSETS = {
     "STAGING":   "https://i.ibb.co/k6r48xvw/Shot-20260511-233454.jpg",                                     # SET.A.LIGHT 站位圖
     "LASTFRAME": "https://github.com/khm265-web/bensik-assets/blob/main/output_20260520_031519.mp4.00_00_09_18.Still001.png?raw=true",           # 上條片 cap 的幀
     "FIRSTFRAME": "https://i.ibb.co/Mq0zLw2/hf-20260607-150113-1cdddb7b-11f3-46c7-ae24-fabc6be7dde2.png", # FIRST FRAME MODE專用
-    "REF_FRAME_01": "https://i.ibb.co/ccfF9Gnf/image.png",
+    "REF_FRAME_01": "https://i.ibb.co/Gr6T7SJ/hf-20260607-212855-501147d7-9d2c-46c4-b4e0-872ed60feb5e.png",
     "REF_FRAME_02": "https://i.ibb.co/kgZMzBHp/hf-20260527-191342-e29e373a-bd3a-4ab0-be4e-b092c2fc2fb9.png"
 }
 
