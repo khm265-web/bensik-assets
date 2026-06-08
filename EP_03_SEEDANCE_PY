@@ -90,6 +90,7 @@ ASSETS = {
     "PROP_6":    "https://i.ibb.co/qY1R62wH/hf-20260606-210422-2b9bdab2-7cce-4741-bd3c-7ce7a2ac47e4.png",  # 場5地球儀
     "PROP_7":    "https://i.ibb.co/1tkTtX3J/hf-20260607-131637-67092222-6ba8-4390-8045-3463f6f2ce84.png",  # 場11末日報紙
     "PROP_8":    "https://i.ibb.co/4Z6W6x62/hf-20260607-162149-b5c7a0dd-41d8-45ed-9118-0a7d34dd5e06.png",  # 場16足球場上的90:00倒數鐘
+    "PROP_9":    "https://i.ibb.co/Fkx1ttKH/hf-20260608-005654-512491cd-8c34-4773-a77a-785058db4f53.png",  # 隕石輻射效果
 
     # 特殊
     "STAGING":   "https://i.ibb.co/k6r48xvw/Shot-20260511-233454.jpg",                                     # SET.A.LIGHT 站位圖
