@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # API KEY —— 唔好分享俾人！
 # ============================================================
 
-API_KEY = "ark-8b3fd270-24b5-4b55-8415-9a67c94c4ea8-029c7"
+API_KEY = ""
 
 # ============================================================
 # BytePlus 設定
